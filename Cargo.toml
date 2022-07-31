@@ -11,5 +11,5 @@ keywords = ["proc-macro", "macro"]
 categories = ["development-tools::procedural-macro-helpers"]
 
 [dependencies]
-include-crypt-bytes-cipher = { path = "include-crypt-bytes-cipher" }
-include-crypt-bytes-macro = { path = "include-crypt-bytes-macro" }
+include-crypt-bytes-cipher = { path = "include-crypt-bytes-cipher", version = "0.1" }
+include-crypt-bytes-macro = { path = "include-crypt-bytes-macro", version = "0.1" }
