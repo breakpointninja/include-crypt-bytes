@@ -17,5 +17,5 @@ syn = { version = "1.0", features = ["full", "fold"] }
 quote = "1.0"
 proc-macro2 = "1.0"
 rand = "0.8"
-include-crypt-bytes-cipher = { path = "../include-crypt-bytes-cipher" }
+include-crypt-bytes-cipher = { path = "../include-crypt-bytes-cipher", version = "0.1" }
 
