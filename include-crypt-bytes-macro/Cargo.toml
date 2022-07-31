@@ -1,0 +1,21 @@
+[package]
+name = "include-crypt-bytes-macro"
+version = "0.1.0"
+authors = ["BreakpointNinja <ninja@breakpoint.ninja>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Proc macro crate for include-crypt-bytes"
+repository = "https://github.com/breakpointninja/include-crypt-bytes"
+keywords = ["proc-macro", "macro"]
+categories = ["development-tools::procedural-macro-helpers"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "1.0", features = ["full", "fold"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+rand = "0.8"
+include-crypt-bytes-cipher = { path = "../include-crypt-bytes-cipher" }
+

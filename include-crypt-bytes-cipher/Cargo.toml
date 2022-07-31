@@ -1,0 +1,17 @@
+[package]
+name = "include-crypt-bytes-cipher"
+version = "0.1.0"
+authors = ["BreakpointNinja <ninja@breakpoint.ninja>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Rust macro to embed encrypted files in compiled binary"
+repository = "https://github.com/breakpointninja/include-crypt-bytes"
+readme = "README.md"
+keywords = ["proc-macro", "macro"]
+categories = ["development-tools::procedural-macro-helpers"]
+
+[dependencies]
+rust-argon2 = "1.0.0"
+chacha20poly1305 = { version = "0.9", features = ["std"] }
+rand = "0.8"
+thiserror = "1.0"
