@@ -1,6 +1,6 @@
 [package]
 name = "include-crypt-bytes"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["BreakpointNinja <ninja@breakpoint.ninja>"]
 edition = "2021"
 license = "MIT OR Apache-2.0"
