@@ -1,8 +1,10 @@
 use argon2::Config;
-use chacha20poly1305::{ChaCha20Poly1305, Key, Nonce};
-use chacha20poly1305::aead::{Aead, Error as CipherError, NewAead};
+use chacha20poly1305::{
+    aead::{Aead, KeyInit, OsRng},
+    ChaCha20Poly1305, Nonce, Error as CipherError,
+};
 use rand::RngCore;
-use rand::rngs::OsRng;
+use crypto_common::InvalidLength;
 
 #[derive(thiserror::Error, Debug)]
 pub enum CryptError {
@@ -10,6 +12,8 @@ pub enum CryptError {
     HashError(#[from] argon2::Error),
     #[error("Cipher Failed: {0}")]
     CipherError(#[from] CipherError),
+    #[error("Invalid length: {0}")]
+    InvalidLength(#[from] InvalidLength),
 }
 
 type Result<T> = core::result::Result<T, CryptError>;
@@ -26,9 +30,8 @@ pub fn encrypt_bytes(bytes: &[u8], password: &[u8]) -> Result<(Vec<u8>, [u8; 12]
     let key = argon2::hash_raw(password, &salt, &config)?;
 
     // Encrypt
-    let key = Key::from_slice(key.as_ref()); // 32-bytes
     let nonce_array = Nonce::from_slice(&nonce);
-    let cipher = ChaCha20Poly1305::new(key);
+    let cipher = ChaCha20Poly1305::new_from_slice(&key)?;
     let ciphertext = cipher.encrypt(nonce_array, bytes)?;
 
     Ok((ciphertext, nonce, salt))
@@ -45,8 +48,7 @@ pub fn decrypt_bytes(
     let key = argon2::hash_raw(password, salt, &config)?;
 
     // Decrypt
-    let key = Key::from_slice(key.as_ref()); // 32-bytes
-    let cipher = ChaCha20Poly1305::new(key);
+    let cipher = ChaCha20Poly1305::new_from_slice(key.as_ref())?;
     let nonce_array = Nonce::from_slice(nonce);
 
     Ok(cipher.decrypt(nonce_array, bytes)?)
